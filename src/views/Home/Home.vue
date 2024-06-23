@@ -74,6 +74,8 @@ export default {
     color: #C3C3C3;
 }
 
+.test {}
+
 .slide-enter-active,
 .slide-leave-active {
 
