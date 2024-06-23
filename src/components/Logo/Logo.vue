@@ -4,6 +4,12 @@
     </div>
 </template>
 
+<script lang="ts">
+export default {
+    name: 'Logo',
+};
+</script>
+
 <style lang="scss" scoped>
 .logo {
     font-size: 1em;
