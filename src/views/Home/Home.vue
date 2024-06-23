@@ -1,15 +1,14 @@
 <template>
-
+    <div>test</div>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'Start',
+    name: 'Home',
     components: {
     },
     data() {
         return {
-            loadingProgress: 0,
         };
     },
     methods: {
@@ -17,4 +16,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

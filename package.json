@@ -13,6 +13,7 @@
         "axios": "^1.7.2",
         "bootstrap-icons": "^1.11.3",
         "eslint": "^9.4.0",
+        "iconoir": "^7.7.0",
         "pinia": "^2.1.7",
         "pinia-plugin-persistedstate": "^3.2.1",
         "pocketbase": "^0.21.3",
