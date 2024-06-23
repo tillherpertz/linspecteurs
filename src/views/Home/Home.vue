@@ -88,6 +88,7 @@ export default {
 
 .slide-enter-from,
 .slide-leave-to {
+    .test {}
 
     .logo-size-start {
         transform: translateY(-30px);
