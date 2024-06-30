@@ -9,18 +9,20 @@
             </div>
         </div>
         <div v-else>
-            Home
+            <Header></Header>
         </div>
     </Transition>
 </template>
 
 <script lang="ts">
 import Logo from '@/components/Logo/Logo.vue';
+import Header from '@/components/Header/Header.vue';
 
 export default {
     name: 'Start',
     components: {
         Logo,
+        Header,
     },
     data() {
         return {
@@ -29,7 +31,10 @@ export default {
         };
     },
     methods: {
-        startLoading() {
+        startLoading(this: {
+            apiHasLoaded: boolean;
+            loadingProgress: number
+        }) {
             const interval = setInterval(() => {
                 this.loadingProgress += 1;
                 if (this.loadingProgress == 100) {
@@ -74,10 +79,12 @@ export default {
     color: #C3C3C3;
 }
 
-.test {}
-
 .slide-enter-active,
 .slide-leave-active {
+
+    .loading-wrapper {
+        transition: all 0.8s ease-in-out;
+    }
 
     .logo-size-start {
         transition: all 0.8s ease-in-out;
@@ -90,10 +97,16 @@ export default {
 
 .slide-enter-from,
 .slide-leave-to {
+    .loading-wrapper {
+        height: 0;
+        opacity: 0;
+        transition-delay: 600ms;
+    }
+
     .logo-size-start {
         transform: translateY(-30px);
         opacity: 0;
-        transition-delay: 600ms;
+        transition-delay: 400ms;
     }
 
     .loading-bar {
