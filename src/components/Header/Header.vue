@@ -19,7 +19,6 @@ export default {
         Logo,
     },
     data() {
-        console.log(this.$route.name);
         return {
             isNotHome: this.$route.name !== 'home',
         };

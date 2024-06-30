@@ -10,6 +10,7 @@
         </div>
         <div v-else>
             <Header></Header>
+            <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline"></Title>
         </div>
     </Transition>
 </template>
@@ -17,36 +18,59 @@
 <script lang="ts">
 import Logo from '@/components/Logo/Logo.vue';
 import Header from '@/components/Header/Header.vue';
+import { useRecipesStore } from '@/store/recipeStore';
+import HomeContent from '@/types/HomeContent';
+import { useHomeStore } from '@/store/homeStore';
+import Title from '@/components/Title/Title.vue';
 
 export default {
     name: 'Start',
     components: {
         Logo,
         Header,
+        Title
     },
     data() {
         return {
             loadingProgress: 0,
             apiHasLoaded: false,
+            generatedWelcome: {} as HomeContent,
         };
     },
     methods: {
-        startLoading(this: {
-            apiHasLoaded: boolean;
-            loadingProgress: number
-        }) {
-            const interval = setInterval(() => {
-                this.loadingProgress += 1;
-                if (this.loadingProgress == 100) {
-                    clearInterval(interval);
-                    this.apiHasLoaded = true;
-                }
-            }, 30);
-            interval;
+        updateProgress(increment: number) {
+            this.loadingProgress += increment;
+            if (this.loadingProgress >= 100) {
+                this.apiHasLoaded = true;
+            }
+        },
+        async fillStores() {
+            const totalTasks = 2; // Number of async tasks
+            const increment = 100 / totalTasks; // Progress increment per task
+
+            await useHomeStore().fetchHomeContent();
+            this.updateProgress(increment);
+
+            await useRecipesStore().fetchRecipes();
+            this.updateProgress(increment);
+
+            console.log('Stores filled');
+        },
+        randomlySelectWelcome() {
+            const message = {
+                headline: '',
+                subHeadline: '',
+            };
+            const randomMessageNumber = Math.floor(Math.random() * useHomeStore().home.length);
+            message.headline = useHomeStore().home[randomMessageNumber].headline;
+            message.subHeadline = useHomeStore().home[randomMessageNumber].subHeadline;
+            return message;
         },
     },
-    mounted() {
-        this.startLoading();
+    async beforeMount() {
+        this.fillStores().then(() => {
+            this.generatedWelcome = this.randomlySelectWelcome();
+        });
     },
 };
 </script>
