@@ -8,9 +8,12 @@
                 </div>
             </div>
         </div>
-        <div v-else>
+        <div v-else class="content-wrapper">
             <Header></Header>
-            <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline"></Title>
+            <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline">
+            </Title>
+            <Filters :categories="categories"></Filters>
+            <!-- <Recipes></Recipes> -->
         </div>
     </Transition>
 </template>
@@ -18,23 +21,27 @@
 <script lang="ts">
 import Logo from '@/components/Logo/Logo.vue';
 import Header from '@/components/Header/Header.vue';
-import { useRecipesStore } from '@/store/recipeStore';
 import HomeContent from '@/types/HomeContent';
-import { useHomeStore } from '@/store/homeStore';
+import { useStore } from '@/store/store';
 import Title from '@/components/Title/Title.vue';
+import Filters from '@/components/Filters/Filters.vue';
+import Category from '@/types/Category';
+
 
 export default {
-    name: 'Start',
+    name: 'Home',
     components: {
         Logo,
         Header,
-        Title
+        Title,
+        Filters,
     },
     data() {
         return {
             loadingProgress: 0,
             apiHasLoaded: false,
             generatedWelcome: {} as HomeContent,
+            categories: {} as Category[],
         };
     },
     methods: {
@@ -45,25 +52,27 @@ export default {
             }
         },
         async fillStores() {
-            const totalTasks = 2; // Number of async tasks
-            const increment = 100 / totalTasks; // Progress increment per task
+            const totalTasks = 3; // Number of async tasks
+            const increment = Math.floor(100 / totalTasks); // Progress increment per task
 
-            await useHomeStore().fetchHomeContent();
+            await useStore().fetchHomeContent();
             this.updateProgress(increment);
 
-            await useRecipesStore().fetchRecipes();
+            await useStore().fetchRecipes();
             this.updateProgress(increment);
 
-            console.log('Stores filled');
+            await useStore().fetchCategories();
+            this.categories = useStore().categories;
+            this.updateProgress(100);
         },
         randomlySelectWelcome() {
             const message = {
                 headline: '',
                 subHeadline: '',
             };
-            const randomMessageNumber = Math.floor(Math.random() * useHomeStore().home.length);
-            message.headline = useHomeStore().home[randomMessageNumber].headline;
-            message.subHeadline = useHomeStore().home[randomMessageNumber].subHeadline;
+            const randomMessageNumber = Math.floor(Math.random() * useStore().home.length);
+            message.headline = useStore().home[randomMessageNumber].headline;
+            message.subHeadline = useStore().home[randomMessageNumber].subHeadline;
             return message;
         },
     },
@@ -76,6 +85,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.content-wrapper {
+    margin: 0 20px;
+}
+
 .loading-wrapper {
     display: flex;
     flex-direction: column;

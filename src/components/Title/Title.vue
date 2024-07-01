@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <h1>{{ headline }}</h1>
-        <h2>{{ subHeadline }}</h2>
-    </div>
+    <Transition :duration="2000" name="fade">
+        <div v-if="showTitle">
+            <h1 class="headline">{{ headline }}</h1>
+            <h2 class="subHeadline">{{ subHeadline }}</h2>
+        </div>
+    </Transition>
 </template>
 
 <script lang="ts">
@@ -19,8 +21,48 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            showTitle: false,
+        };
+    },
+    mounted() {
+        setTimeout(() => {
+            this.showTitle = true;
+        }, 1000);
+    }
 };
 
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+h1,
+h2 {
+    margin-block: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    .headline {
+        transition: all 0.5s ease-in-out;
+    }
+
+    .subHeadline {
+        transition: all 0.5s ease-in-out;
+        transition-delay: 0.2s;
+    }
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    .headline {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .subHeadline {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+</style>

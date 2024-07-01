@@ -1,6 +1,7 @@
 import PocketBase from 'pocketbase';
 import Recipe from '../types/Recipe.ts';
 import HomeContent from '../types/HomeContent.ts';
+import Category from '@/types/Category.ts';
 
 const apiUrl = import.meta.env.VITE_POCKETBASE_API_URL;
 const apiUser = import.meta.env.VITE_POCKETBASE_API_USER;
@@ -26,6 +27,16 @@ export default {
         try {
             const result: Recipe[] = await pb.collection('recipes').getFullList({
                 sort: '-created',
+            });
+            return result;
+        } catch (e) {
+            throw e;
+        }
+    },
+    async getCategories(): Promise<Category[]> {
+        try {
+            const result: Category[] = await pb.collection('categories').getFullList({
+                sort: 'name',
             });
             return result;
         } catch (e) {
