@@ -1,7 +1,7 @@
 <template>
     <div class="filter-wrapper">
-        <FilterElement v-for="category in categories" :key="category.id" :category="category.name"
-            :icon="category.icon">
+        <FilterElement v-for="category in categories" :key="category.id" :category="category.name" :icon="category.icon"
+            :isSelected="category.icon === selectedIcon" @toggle="setSelectedIcon(category.icon)">
         </FilterElement>
     </div>
 </template>
@@ -23,8 +23,13 @@ export default {
     },
     data() {
         return {
-            selected: false,
+            selectedIcon: '',
         };
+    },
+    methods: {
+        setSelectedIcon(icon: string) {
+            this.selectedIcon = this.selectedIcon === icon ? '' : icon;
+        },
     },
 };
 </script>
@@ -40,7 +45,6 @@ export default {
     margin: 20px 0;
 
     .selected {
-        background-color: #f2f2f2;
 
         p {
             display: block;
