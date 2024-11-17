@@ -13,7 +13,7 @@
             <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline">
             </Title>
             <Filters :categories="categories"></Filters>
-            <!-- <Recipes></Recipes> -->
+            <RecipesWrapper></RecipesWrapper>
         </div>
     </Transition>
 </template>
@@ -26,6 +26,7 @@ import { useStore } from '@/store/store';
 import Title from '@/components/Title/Title.vue';
 import Filters from '@/components/Filters/Filters.vue';
 import Category from '@/types/Category';
+import RecipesWrapper from '@/components/Recipes/RecipesWrapper.vue';
 
 
 export default {
@@ -35,6 +36,7 @@ export default {
         Header,
         Title,
         Filters,
+        RecipesWrapper,
     },
     data() {
         return {

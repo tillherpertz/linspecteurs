@@ -1,8 +1,12 @@
 export default interface Recipe {
-    id: number;
+    collectionId: string;
+    collectionName: string;
+    created: string;
     headline: string;
-    subHeadline: string;
-    instructions: JSON;
-    ingredients: JSON;
+    id: string;
     image: string;
+    ingredients: JSON;
+    instructions: JSON;
+    subHeadline: string;
+    updated: string;
 }
