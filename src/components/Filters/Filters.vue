@@ -1,6 +1,9 @@
 <template>
-    <FilterElement v-for="category in categories" :key="category.id" :category="category.name" :icon="category.icon">
-    </FilterElement>
+    <div class="filter-wrapper">
+        <FilterElement v-for="category in categories" :key="category.id" :category="category.name"
+            :icon="category.icon">
+        </FilterElement>
+    </div>
 </template>
 
 <script lang="ts">
@@ -20,13 +23,28 @@ export default {
     },
     data() {
         return {
-
+            selected: false,
         };
-    },
-    methods: {
-
     },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+    margin: 20px 0;
+
+    .selected {
+        background-color: #f2f2f2;
+
+        p {
+            display: block;
+        }
+    }
+}
+</style>
