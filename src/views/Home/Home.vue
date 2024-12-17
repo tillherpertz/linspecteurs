@@ -10,8 +10,7 @@
         </div>
         <div v-else class="content-wrapper">
             <Header></Header>
-            <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline">
-            </Title>
+            <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline" />
             <Filters :categories="categories"></Filters>
             <RecipesWrapper></RecipesWrapper>
         </div>

@@ -3,7 +3,9 @@
         <img :src="imageLink" alt="recipe image" />
         <h4>{{ recipe.headline }}</h4>
         <p>{{ recipe.subHeadline }}</p>
-        <YoshiButton />
+        <RouterLink :to="recipeRoute">
+            <YoshiButton />
+        </RouterLink>
     </div>
 </template>
 
@@ -11,6 +13,7 @@
 import { generateImageLink } from '../../utils/utilities.ts';
 import Recipe from '@/types/Recipe';
 import YoshiButton from '../YoshiButton/YoshiButton.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
     name: 'RecipeTile',
@@ -26,6 +29,7 @@ export default {
     data() {
         return {
             imageLink: generateImageLink(this.recipe.collectionId, this.recipe.id, this.recipe.image),
+            recipeRoute: `/recipe/${this.recipe.id}`,
         };
     },
 }

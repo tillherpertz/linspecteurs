@@ -16,7 +16,6 @@ export default {
         RecipeTile,
     },
     data() {
-        console.log(useStore().recipes);
         return {
             recipes: useStore().recipes,
         };
