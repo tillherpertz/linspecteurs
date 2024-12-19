@@ -1,7 +1,7 @@
 <template>
     <Transition :duration="2000" name="fade">
         <div class="topic-wrapper">
-            <h5>Zutaten</h5>
+            <h5>Zubereitung</h5>
             <hr>
         </div>
     </Transition>
@@ -9,7 +9,7 @@
 
 <script lang="ts">
 export default {
-    name: 'Ingredients',
+    name: 'Instructions',
 };
 
 </script>
@@ -21,8 +21,6 @@ export default {
     width: 100%;
     align-items: center;
     margin: 0 20px;
-
-    h5 {}
 
     hr {
         width: 90%;

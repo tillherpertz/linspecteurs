@@ -1,10 +1,12 @@
 <template>
-    <Transition :duration="2000" name="fade">
-        <div v-if="showTitle">
-            <h1 class="headline">{{ headline }}</h1>
-            <h2 class="subHeadline">{{ subHeadline }}</h2>
-        </div>
-    </Transition>
+    <div class="title">
+        <Transition :duration="2000" name="fade">
+            <div v-if="showTitle">
+                <h1 class="headline">{{ headline }}</h1>
+                <h2 class="subHeadline">{{ subHeadline }}</h2>
+            </div>
+        </Transition>
+    </div>
 </template>
 
 <script lang="ts">
@@ -39,6 +41,11 @@ export default {
 h1,
 h2 {
     margin-block: 0;
+}
+
+.title {
+    height: 54px;
+    margin-bottom: 1rem;
 }
 
 .fade-enter-active,

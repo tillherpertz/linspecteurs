@@ -11,8 +11,7 @@
         <div v-else class="content-wrapper">
             <Header></Header>
             <Title :headline="generatedWelcome.headline" :subHeadline="generatedWelcome.subHeadline" />
-            <Filters :categories="categories"></Filters>
-            <RecipesWrapper></RecipesWrapper>
+            <component :is="currentComponent" v-if="currentComponent" />
         </div>
     </Transition>
 </template>
@@ -26,6 +25,7 @@ import Title from '@/components/Title/Title.vue';
 import Filters from '@/components/Filters/Filters.vue';
 import Category from '@/types/Category';
 import RecipesWrapper from '@/components/Recipes/RecipesWrapper.vue';
+import Recipe from '../Recipe/Recipe.vue';
 
 
 export default {
@@ -36,6 +36,7 @@ export default {
         Title,
         Filters,
         RecipesWrapper,
+        Recipe
     },
     data() {
         return {
@@ -43,7 +44,20 @@ export default {
             apiHasLoaded: false,
             generatedWelcome: {} as HomeContent,
             categories: {} as Category[],
+            currentComponent: '',
         };
+    },
+    computed: {
+        currentComponent() {
+            switch (this.$route.name) {
+                case 'home':
+                    return 'RecipesWrapper';
+                case 'recipe':
+                    return 'Recipe';
+                default:
+                    return 'RecipesWrapper';
+            }
+        },
     },
     methods: {
         updateProgress(increment: number) {
@@ -81,6 +95,19 @@ export default {
         this.fillStores().then(() => {
             this.generatedWelcome = this.randomlySelectWelcome();
         });
+    },
+    watch: {
+        "$route.name": {
+            handler: function (newRoute) {
+                console.log('param')
+                console.log(this.$route.params.id);
+                if (newRoute === 'recipe' && this.$route.params.id) {
+                    this.currentComponent = 'Recipe';
+                } else {
+                    this.currentComponent = 'RecipesWrapper'; // Default or fallback component
+                }
+            }
+        }
     },
 };
 </script>

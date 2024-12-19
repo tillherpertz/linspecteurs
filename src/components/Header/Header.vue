@@ -1,7 +1,9 @@
 <template>
     <div class="header-wrapper">
         <div class="nav-arrow-container">
-            <NavArrowLeft v-if="isNotHome"></NavArrowLeft>
+            <router-link :to="homeRoute">
+                <NavArrowLeft v-if="isNotHome"></NavArrowLeft>
+            </router-link>
         </div>
         <Logo logoSize="1.25em"></Logo>
         <Search></Search>
@@ -21,6 +23,7 @@ export default {
     data() {
         return {
             isNotHome: this.$route.name !== 'home',
+            homeRoute: '/'
         };
     },
 };

@@ -1,36 +1,24 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home/Home.vue'
-import api from '@/api/api'
 import Recipe from '@/views/Recipe/Recipe.vue'
 
 const routes = [
     {
-        path: '',
+        path: '/',
         name: 'home',
         component: Home,
     },
+    {
+        path: '/recipe/:id',
+        name: 'recipe',
+        component: Recipe,
+        props: true,
+    }
 ]
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
 })
-
-const recipes = await api.getRecipes()
-
-for (let recipe of recipes) {
-    router.addRoute({
-        path: `/recipe/${recipe.id}`,
-        name: recipe.headline,
-        component: Recipe,
-        props: {
-            recipe: recipe,
-        }
-    })
-}
-
-console.log(router.getRoutes())
-
-
 
 export default router
